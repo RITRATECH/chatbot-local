@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html id="html" lang="id" class="transition-all">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-all"
+  >
+    <div
+      class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg relative"
+    >
+      <h1 class="text-2xl font-bold mb-6 text-center">✏️ Edit Chat</h1>
+
+      {% if chat %}
+      <form method="POST" class="space-y-4">
+        <div>
+          <label class="block mb-1 font-semibold" for="user_message"
+            >Pesan User:</label
+          >
+          <textarea
+            id="user_message"
+            name="user_message"
+            rows="3"
+            class="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600"
+          >
+            {{ chat.user_message }}
+          </textarea>
+        </div>
+        <div>
+          <label class="block mb-1 font-semibold" for="bot_reply"
+            >Balasan Bot:</label
+          >
+          <textarea
+            id="bot_reply"
+            name="bot_reply"
+            rows="3"
+            class="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600"
+          >
+            {{ chat.bot_reply }}
+          </textarea>
+        </div>
+        <div class="flex justify-between items-center mt-6">
+          <a href="/history" class="text-sm text-blue-500 hover:underline"
+            >⬅️ Kembali</a
+          >
+          <button
+            type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+          >
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+      {% else %}
+      <p class="text-center text-red-500 font-semibold">
+        Chat tidak ditemukan!
+      </p>
+      {% endif %}
+    </div>
+
+    <!-- Toast Notification -->
+    {% if request.args.get('updated') == '1' %}
+    <div
+      id="toast"
+      class="fixed top-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg"
+    >
+      ✅ Chat berhasil diupdate!
+    </div>
+    <script>
+      setTimeout(() => {
+        const toast = document.getElementById("toast");
+        if (toast) toast.remove();
+      }, 3000);
+    </script>
+    {% endif %}
+
+    <style>
+      /* Default Light Mode */
+      body.light-mode {
+          background-color: white;
+          color: black;
+          transition: background-color 0.5s, color 0.5s;
+      }
+
+      /* Dark Mode */
+      body.dark-mode {
+          background-color: black;
+          color: white;
+      }
+
+      .toggle-button {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: gray;
+          color: white;
+          padding: 10px;
+          cursor: pointer;
+      }
+  </style>
+</head>
+<body>
+  <h1>Dark Mode</h1>
+  <p>Tekan tombol di bawah untuk beralih antara dark mode dan light mode.</p>
+  
+  <button class="toggle-button" onclick="toggleDarkMode()">🌓 Dark Mode</button>
+
+  <script>
+      // Cek apakah sudah ada pengaturan tema yang disimpan
+      if (localStorage.getItem('theme') === 'dark') {
+          document.body.classList.add('dark-mode');
+      }
+
+      // Fungsi untuk toggle dark mode
+      function toggleDarkMode() {
+          const isDarkMode = document.body.classList.toggle('dark-mode');
+          
+          // Simpan status tema yang dipilih di localStorage
+          if (isDarkMode) {
+              localStorage.setItem('theme', 'dark');
+          } else {
+              localStorage.setItem('theme', 'light');
+          }
+      }
+  </script>
+  </body>
+</html>

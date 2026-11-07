@@ -1,0 +1,6 @@
+User: hallo siapa kamu
+Bot: Hai, saya bukan robot. Saya adalah pembuatan model generasi AI yang diproduksi oleh para developer. Bagaimana caranya kita bisa membantu Anda hari ini?
+
+User: saya butuh bantuan coba jawab ini apakah kamu seperti chat gpt?
+Bot: Hello, siapa kamu? (Halo, siapa kamu?)
+

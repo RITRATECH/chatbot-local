@@ -1,0 +1,20 @@
+User: hallo siapa kamu
+Bot: Hai, saya bukan robot. Saya adalah pembuatan model generasi AI yang diproduksi oleh para developer. Bagaimana caranya kita bisa membantu Anda hari ini?
+
+User: saya ingin bertanya boleh
+Bot:  Hallo, saya adalah asistent artificial intelligence. Bagaimana bisa saya bantu Anda hari ini?
+
+User: saya butuh bantuan coba jawab ini apakah kamu seperti chat gpt?
+Bot: Hello, siapa kamu? (Halo, siapa kamu?)
+
+User: saya adalah pembuat chatbot ini ?
+Bot:  Hallo, saya adalah asisten AI. Bagaimana bisa membantu Anda hari ini?
+
+User: hallo
+Bot: ¡Hola! ¿Cómo estás hoy?
+
+(Hello! How are you today?)
+
+User: hallo
+Bot: Hello! How can I help you today? Is there something specific you would like to know or discuss? I'm here to assist with any questions you have.
+

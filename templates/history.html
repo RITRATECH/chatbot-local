@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Riwayat Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md">
+      <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">
+        Riwayat Chat 📜
+      </h1>
+
+      <!-- 🔍 Search -->
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari pesan..."
+        class="w-full p-4 border rounded-lg mb-6"
+        onkeyup="filterChats()"
+      />
+
+      <!-- 📝 List chat -->
+      <ul id="chatList" class="space-y-6">
+        {% for chat in history %}
+        <li class="p-4 bg-gray-100 rounded-lg">
+          <div><b>👤 Kamu:</b> {{ chat.user_message }}</div>
+          <div><b>🤖 Bot:</b> {{ chat.bot_reply }}</div>
+          <div class="text-right mt-2">
+            <a
+              href="/edit/{{ chat.id }}"
+              class="text-blue-500 hover:underline mr-4"
+              >✏️ Edit</a
+            >
+            <a href="/delete/{{ chat.id }}" class="text-red-500 hover:underline"
+              >🗑️ Hapus</a
+            >
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- 📄 Pagination -->
+      <div id="pagination" class="flex justify-center mt-8 space-x-2"></div>
+
+      <div class="text-center mt-8">
+        <a
+          href="/"
+          class="text-white bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg inline-block"
+          >⬅️ Kembali ke Chatbot</a
+        >
+      </div>
+    </div>
+
+    <script>
+      const chatList = document.getElementById("chatList");
+      const chats = Array.from(chatList.children);
+      const pagination = document.getElementById("pagination");
+      const itemsPerPage = 5;
+      let currentPage = 1;
+
+      function displayChats() {
+        chatList.innerHTML = "";
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        chats.slice(start, end).forEach((chat) => chatList.appendChild(chat));
+        updatePagination();
+      }
+
+      function updatePagination() {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(chats.length / itemsPerPage);
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.textContent = i;
+          button.className = `px-4 py-2 rounded-lg ${
+            i === currentPage ? "bg-blue-600 text-white" : "bg-gray-300"
+          }`;
+          button.onclick = () => {
+            currentPage = i;
+            displayChats();
+          };
+          pagination.appendChild(button);
+        }
+      }
+
+      function filterChats() {
+        const input = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        chats.forEach((chat) => {
+          const text = chat.innerText.toLowerCase();
+          chat.style.display = text.includes(input) ? "" : "none";
+        });
+      }
+
+      displayChats();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chatbot Lokal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md">
+      <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">
+        Chatbot Lokal 🤖
+      </h1>
+
+      <!-- 🔥 Navbar menu -->
+      <div class="flex justify-center space-x-6 mb-8">
+        <a
+          href="/history"
+          class="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg flex items-center gap-2"
+        >
+          📜 Riwayat Chat
+        </a>
+        <a
+          href="/export"
+          class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg flex items-center gap-2"
+        >
+          ⬇️ Export Chat
+        </a>
+      </div>
+
+      <!-- 🔥 Form kirim chat -->
+      <form id="chatForm" class="space-y-4">
+        <input
+          type="text"
+          id="message"
+          placeholder="Tulis pesan..."
+          class="w-full p-4 border rounded-lg"
+          required
+        />
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
+        >
+          Kirim
+        </button>
+      </form>
+
+      <div id="chatBox" class="mt-8 space-y-4"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById("chatForm");
+      const chatBox = document.getElementById("chatBox");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const messageInput = document.getElementById("message");
+        const userMessage = messageInput.value;
+        chatBox.innerHTML += `<div class="p-4 bg-gray-200 rounded-xl"><b>Kamu:</b> ${userMessage}</div>`;
+
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage }),
+        });
+
+        const data = await response.json();
+        chatBox.innerHTML += `<div class="p-4 bg-green-200 rounded-xl"><b>Bot:</b> ${data.reply}</div>`;
+
+        messageInput.value = "";
+      });
+    </script>
+  </body>
+</html>
